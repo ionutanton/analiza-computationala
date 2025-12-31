@@ -1,0 +1,144 @@
+========================================================================
+PISA  (www.tik.ee.ethz.ch/pisa/)
+========================================================================
+Computer Engineering (TIK)
+ETH Zurich	 
+========================================================================
+FEMO - Fair Evolutionary Multiobjective Optimizer
+
+Implementation in C for the selector side using PISALib
+
+Documentation
+  
+file: femo_documentation.txt
+author: Marco Laumanns, laumanns@tik.ee.ethz.ch
+
+revision by: Stefan Bleuler, bleuler@tik.ee.ethz.ch
+last change: $date$
+========================================================================
+
+
+
+The Optimizer
+=============
+
+FEMO (Fair Evolutionary Multiobjective Optimizer) is a
+population-based evolutionary algorithm for multiobjective
+optimization. 
+
+This algorithm uses an archive of variable size that stores all
+non-dominated individuals. For each individual, a counter is used to
+count the number of times this individual has been chosen for
+variation. As parent individual, the individual with the lowest
+variation count will be chosen, ties are broken randomly.  In order to
+keep the archive size small, a new solution is only accepted if it is
+not equal in all objective values to any other individual in the
+archive. The original FEMO is described in the following reference. In
+addition to that, this implementation allows to PISA_more that only
+one individual at a time, thus allowing the use of multi-membered
+variation operators (e.g. recombination by uniform crossover).
+
+@inproceedings{LTZWD2002b,
+    author = {M. Laumanns and L. Thiele and E. Zitzler and
+                  E. Welzl and K. Deb}, 
+    booktitle = {Parallel Problem Solving From Nature --- PPSN VII},
+    title = {Running time analysis of multi-objective evolutionary
+                  algorithms on a simple discrete optimization problem},
+    year = {2002}
+}
+
+
+
+The Parameters
+==============
+
+FEMO uses the following values for the common parameters.
+These parameters are specified in 'PISA_cfg'.
+
+alpha    (population size)
+mu       (number of parent individuals)
+lambda   (number of offspring individuals)
+dim      (number of objectives)
+
+
+FEMO takes one local parameter which is given in a parameter file.
+The name of this parameter file is passed to FEMO as command line
+argument. (See 'femo_param.txt' for an example.)
+
+seed         (seed for the random number generator)
+
+
+
+Source Files
+============
+
+The source code for FEMO is divided into six files.
+
+Four generic files are taken from PISALib:
+
+'selector.{h,c}' is a taken from PISALib. It contains the main
+function and all functions implementing the control flow.
+
+'selector_internal.{h,c}' is taken from PISALib. It contains functions
+that are called by the functions in the 'selector' part and do the
+work in the background (file access etc.). 
+  
+'selector_user.{h,c}' defines and implements the FEMO specific
+operations.
+
+Additionally a Makefile, a 'PISA_cfg' file with common parameters and a
+'femo_param.txt' file with local parameters are contained in the tar
+file.
+
+For compiling on Windows change the according '#define' in the
+'selector_user.h' file.
+
+
+
+
+Usage
+=====
+
+Start FEMO with the following arguments:
+
+femo paramfile filenamebase poll
+
+paramfile: specifies the name of the file containing the local
+parameters (e.g. femo_param.txt)
+
+filenamebase: specifies the name (and optionally the directory) of the
+communication files. The filenames of the communication files and the
+configuration file are built by appending 'sta', 'var', 'sel','ini',
+'arc' and 'cfg' to the filenamebase. This gives the following names for
+the 'PISA_' filenamebase:
+
+PISA_cfg - configuration file
+PISA_ini - initial population
+PISA_sel - individuals selected for variation (parents)
+PISA_var - variated individuals (offspring)
+PISA_arc - individuals in the archive
+
+Caution: the filenamebase must be consistent with the name of
+the configuration file and the filenamebase specified for the FEMO
+module.
+
+poll: gives the value for the polling time in seconds (e.g. 0.5). This
+      polling time must be larger than 0.01 seconds.
+
+
+
+Limitations
+===========
+
+No limitations are known so far.
+
+
+
+Stopping and Resetting
+======================
+
+The behaviour in state 5 and 9 is not determined by the interface but
+by each selector module specifically. FEMO behaves as follows:
+
+state 5 (= variator terminated): set state to 6 (terminate as well).
+state 9 (= variator resetted): set state to 10 (reset as well).

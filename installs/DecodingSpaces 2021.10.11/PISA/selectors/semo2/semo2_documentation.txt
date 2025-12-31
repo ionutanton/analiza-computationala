@@ -1,0 +1,135 @@
+========================================================================
+PISA  (www.tik.ee.ethz.ch/pisa/)
+========================================================================
+Computer Engineering (TIK)
+ETH Zurich	 
+========================================================================
+SEMO2 - Fair Evolutionary Multiobjective Optimizer
+
+Implementation in C for the selector side using PISALib
+
+Documentation
+  
+file: semo2_documentation.txt
+author: Stefan Bleuler, bleuler@tik.ee.ethz.ch
+last change: $date$
+========================================================================
+
+The Optimizer
+=============
+
+SEMO2 is the full version of SEMO.
+
+SEMO2 is a simple evoluationary multiobjective optimizer used as
+demonstration program for PISA. SEMO2 maintains an archive of all
+non-dominated solutions. A parent individual is chosen uniformly from
+this archive. A newly variated individual is only added to the archive
+if it is not dominated by any other individual in the archive and if
+it is not equal in all objective values to any other individual in the
+archive.
+
+
+
+@inproceedings{LTZWD2002b,
+    author = {M. Laumanns and L. Thiele and E. Zitzler and
+                  E. Welzl and K. Deb}, 
+    booktitle = {Parallel Problem Solving From Nature --- PPSN VII},
+    title = {Running time analysis of multi-objective evolutionary
+                  algorithms on a simple discrete optimization problem},
+    year = {2002}
+}
+
+
+
+The Parameters
+==============
+
+SEMO2 uses the following values for the common parameters.
+These parameters are specified in 'PISA_cfg'.
+
+alpha    (population size)
+mu       (number of parent individuals)
+lambda   (number of offspring individuals)
+dim      (number of objectives)
+
+
+SEMO2 takes one local parameter which is given in a parameter file.
+The name of this parameter file is passed to SEMO2 as command line
+argument.  (See 'semo2_param.txt' for an example.)
+
+seed         (seed for the random number generator)
+
+
+
+Source Files
+============
+
+The source code for SEMO2 is divided into six files.
+
+Four generic files are taken from PISALib:
+
+'selector.{h,c}' is a taken from PISALib. It contains the main
+function and all functions implementing the control flow.
+
+'selector_internal.{h,c}' is taken from PISALib. It contains functions
+that are called by the functions in the 'selector' part and do the
+work in the background (file access etc.). 
+  
+'selector_user.{h,c}' defines and implements the SEMO2 specific
+operations.
+
+Additionally a Makefile, a 'PISA_cfg' file with common parameters and a
+'semo2_param.txt' file with local parameters are contained in the tar
+file.
+
+For compiling on Windows change the according '#define' in the
+'selector_user.h' file.
+
+
+
+Usage
+=====
+
+Start SEMO2 with the following arguments:
+
+semo2 paramfile filenamebase poll
+
+paramfile: specifies the name of the file containing the local
+parameters (e.g. semo2_param.txt)
+
+filenamebase: specifies the name (and optionally the directory) of the
+communication files. The filenames of the communication files and the
+configuration file are built by appending 'sta', 'var', 'sel','ini',
+'arc' and 'cfg' to the filenamebase. This gives the following names for
+the 'PISA_' filenamebase:
+
+PISA_cfg - configuration file
+PISA_ini - initial population
+PISA_sel - individuals selected for variation (parents)
+PISA_var - variated individuals (offspring)
+PISA_arc - individuals in the archive
+
+Caution: the filenamebase must be consistent with the name of
+the configuration file and the filenamebase specified for the variator
+module.
+
+poll: gives the value for the polling time in seconds (e.g. 0.5). This
+      polling time must be larger than 0.01 seconds.
+
+
+
+Limitations
+===========
+
+No limitations are known so far.
+
+
+
+Stopping and Resetting
+======================
+
+The behaviour in state 5 and 9 is not determined by the interface but
+by each selector module specifically. SEMO2 behaves as follows:
+
+state 5 (= variator terminated): set state to 6 (terminate as well).
+state 9 (= variator resetted): set state to 10 (reset as well).

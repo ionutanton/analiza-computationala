@@ -1,0 +1,128 @@
+========================================================================
+PISA  (www.tik.ee.ethz.ch/pisa/)
+========================================================================
+Computer Engineering (TIK)
+ETH Zurich	 
+========================================================================
+SPAM - Set Preference Algorithm for Multiobjective Optimization
+
+Implementation in C for the selector side.
+
+Documentation
+  
+author: Johannes Bader, johannes.bader@tik.ee.ethz.ch
+last change: 27.07.2009
+========================================================================
+
+
+
+The Optimizer
+=============
+
+SPAM is a multiobjective evolutionary algorithm to incorporate preference and has been
+proposed by Eckart Zitzler, Lothar Thiele, and Johannes Bader at the ETH Zurich. 
+Here, we present a PISA-implementation of the algorithm based on the cited paper
+
+@Article{	  ztb2008d,
+	author={E. Zitzler and L. Thiele and J. Bader},
+	title={{On Set-Based Multiobjective Optimization}},
+	journal={IEEE Transactions on Evolutionary Computation},
+	year={2009},
+	note={to appear}
+}
+
+
+The Parameters
+==============
+
+SPAM uses the following values for the common parameters.
+These parameters are specified in 'PISA_cfg'.
+
+alpha    (population size)
+mu       (number of parent individuals)
+lambda   (number of offspring individuals)
+dim      (number of objectives)
+
+
+
+SPAM takes three local parameter which is given in a parameter
+file. The name of this parameter file is passed to SPAM as command
+line argument. (See 'SPAM_param.txt' for an example.)
+
+seed 34640576
+bound 1.2
+prefreltype 6
+
+
+seed         (seed for the random number generator)
+bound        (upper bound defining the reference point as r = (bound, ..., bound) )
+prefreltype  (type of preference relation, corresponding to the Figures in [ztb2008d] )
+        		1: minpart + H
+			2: minpart + P1 + H
+			3: minpart + R2 + H
+			4: minpart + eps1 + H
+			5: minpart + P0 + H
+			6: minpart + D
+
+
+Source Files
+============
+
+The source code for SPAM is divided into multiple files.
+
+Additionally a Makefile, a PISA_configuration file with common
+parameters and a PISA_parameter file with local parameters are
+contained in the tar file.
+
+Depending on whether you compile on Windows or on Unix (any OS having
+<unistd.h>) uncomment the according '#define' in the 'spam.h' file.
+
+
+Usage
+=====
+
+Start SPAM with the following arguments:
+
+spam paramfile filenamebase poll
+
+paramfile: specifies the name of the file containing the local
+parameters (e.g. SPAM_param.txt)
+
+filenamebase: specifies the name (and optionally the directory) of the
+communication files. The filenames of the communication files and the
+configuration file are built by appending 'sta', 'var', 'sel','ini',
+'arc' and 'cfg' to the filenamebase. This gives the following names for
+the 'PISA_' filenamebase:
+
+PISA_cfg - configuration file
+PISA_ini - initial population
+PISA_sel - individuals selected for variation (PISA_
+PISA_var - variated individuals (offspring)
+PISA_arc - individuals in the archive
+
+
+Caution: the filenamebase must be consistent with the name of
+the configuration file and the filenamebase specified for the SPAM
+module.
+
+poll: gives the value for the polling time in seconds (e.g. 0.5). This
+      polling time must be larger than 0.01 seconds.
+
+
+
+
+Limitations
+===========
+
+None limitations are known so far.
+
+
+
+Stopping and Resetting
+======================
+
+The behaviour in state 5 and 9 is not determined by the interface but
+by each variator module specifically. SPAM behaves as follows:
+
+state 5 (= variator terminated): set state to 6 (terminate as well).
+state 9 (= variator resetted): set state to 10 (reset as well).

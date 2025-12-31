@@ -1,0 +1,4 @@
+epsilon 0.2 0.2
+seed 12
+tournament 2
+outgen 4999

@@ -1,0 +1,129 @@
+========================================================================
+PISA  (www.tik.ee.ethz.ch/pisa/)
+========================================================================
+Computer Engineering (TIK)
+ETH Zurich	 
+========================================================================
+SHV - Sampling-based HyperVolume-oriented Algorithm
+
+Implementation in C for the selector side.
+
+Documentation
+  
+file: shv_documentation.txt
+author: Johannes Bader, johannes.bader@tik.ee.ethz.ch
+last change: 20.04.2009
+========================================================================
+
+
+
+The Optimizer
+=============
+
+SHV is a hypervolume-based algorithm that uses Monte-Carlo sampling to
+approximate the hypervolume contributions of individuals. 
+
+@InProceedings{	  bdz2008a,
+	author={J. Bader and K. Deb and E. Zitzler},
+	title={{Faster Hypervolume-based Search using Monte Carlo Sampling}},
+	booktitle={Conference on Multiple Criteria Decision Making (MCDM~2008)},
+	year={2008},
+	publisher={Springer},
+	note={to appear},
+	location={Auckland, New Zealand}
+}
+
+The Parameters
+==============
+
+SHV uses the following values for the common parameters.
+These parameters are specified in 'PISA_cfg'.
+
+alpha    (population size)
+mu       (number of parent individuals)
+lambda   (number of offspring individuals)
+dim      (number of objectives)
+
+
+
+SHV takes four local parameter which is given in a parameter
+file. The name of this parameter file is passed to SHV as command
+line argument. (See 'shv_param.txt' for an example.)
+
+seed         (seed for the random number generator)
+bound        (bound used as reference point by the hypervolume indicator)
+junks        (maximum number of sampling steps)
+junksize     (number of samples per step)
+
+
+
+Source Files
+============
+
+The source code for SHV is divided into four files:
+
+'shv.h' is the header file.
+
+'shv.c' contains the main function and implements the control flow.
+
+'shv_io.c' implements the file i/o functions.
+
+'shv_functions.c' implements all other functions including the
+                  selection.
+
+Additionally a Makefile, a PISA_configuration file with common
+parameters and a PISA_parameter file with local parameters are
+contained in the tar file.
+
+Depending on whether you compile on Windows or on Unix (any OS having
+<unistd.h>) uncomment the according '#define' in the 'shv.h' file.
+
+
+Usage
+=====
+
+Start SHV with the following arguments:
+
+shv paramfile filenamebase poll
+
+paramfile: specifies the name of the file containing the local
+parameters (e.g. shv_param.txt)
+
+filenamebase: specifies the name (and optionally the directory) of the
+communication files. The filenames of the communication files and the
+configuration file are built by appending 'sta', 'var', 'sel','ini',
+'arc' and 'cfg' to the filenamebase. This gives the following names for
+the 'PISA_' filenamebase:
+
+PISA_cfg - configuration file
+PISA_ini - initial population
+PISA_sel - individuals selected for variation (PISA_
+PISA_var - variated individuals (offspring)
+PISA_arc - individuals in the archive
+
+
+Caution: the filenamebase must be consistent with the name of
+the configuration file and the filenamebase specified for the SHV
+module.
+
+poll: gives the value for the polling time in seconds (e.g. 0.5). This
+      polling time must be larger than 0.01 seconds.
+
+
+
+
+Limitations
+===========
+
+None limitations are known so far.
+
+
+
+Stopping and Resetting
+======================
+
+The behaviour in state 5 and 9 is not determined by the interface but
+by each variator module specifically. SHV behaves as follows:
+
+state 5 (= variator terminated): set state to 6 (terminate as well).
+state 9 (= variator resetted): set state to 10 (reset as well).

@@ -1,0 +1,16 @@
+---
+name: EleFront
+version: 4.2.2
+authors:
+- Front, Inc.
+description: >
+  EleFront is all about managing model data and enhancing how you interact with objects in Rhino. Assign information directly to your geometry, to turn your model into a dynamic database, and a true "Building Information Model".  Reference and filter your objects with the custom metadata you've added. Construct and Deconstruct Blocks, with persistent metadata, to manage a huge number of objects that can all be intelligent. Plus, components for creating annotations in Grasshopper for baking into Rhino.
+url: https://www.frontinc.com
+keywords:
+- BIM
+- Blocks
+- Attributes
+- Annotations
+- Architecture
+- guid:75c162fb-d2fc-433a-ae87-f0dc6f6da2b5
+platform: any

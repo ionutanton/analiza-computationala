@@ -1,0 +1,5 @@
+seed 19
+tournament 2
+targets 100
+dual 1
+q 100
