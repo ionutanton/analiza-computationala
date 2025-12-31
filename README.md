@@ -12,7 +12,7 @@ Software de bază
 1.	Rhino 7 sau mai nou.
 https://www.rhino3d.com/download/
 Pluginuri pentru Grasshopper (Grasshopper este inclus in Rhino):
-2.	Elefront – v5.1.8 – pentru Rhino 8 și v4.2.2 pentru Rhino 7
+2.	Elefront – v4.2.2
 https://www.food4rhino.com/en/app/elefront
 3.	Ladybug tools – v1.8.0
 https://www.food4rhino.com/en/app/ladybug-tools
