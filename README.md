@@ -12,7 +12,7 @@ Uneltele de analiză se pot utiliza atât pe un context existent cât și ca une
 1.	Rhino 7 sau mai nou.
 https://www.rhino3d.com/download/
 Pluginuri pentru Grasshopper (Grasshopper este inclus in Rhino):
-2.	Elefront – v4.2.2
+2.	Elefront – v4.3.0 (legacy v6) pentru Rhino 7 și Elefront - v5.2.0 pentru Rhino 8.
 https://www.food4rhino.com/en/app/elefront
 3.	Ladybug tools – v1.8.0
 https://www.food4rhino.com/en/app/ladybug-tools
@@ -35,4 +35,4 @@ Se instaleaza in „C:\Radiance\”.
 ## Decoding spaces toolbox
 În Rhino se tastează în linia de comandă „GrasshopperFolders” și se selecteaza „Components”. În folderul deschis („%AppData%/Grasshopper/Libraries”) se va copia folderul „DecodingSpaces 2021.10.11”.
 
-Credit goes to Ionut Anton for initial development and Ioana Pirvu for rhino 8 update.
+Credit goes to Ionut Anton and Dana Anton for initial development and Ioana Pirvu extensive testing and debugging.
