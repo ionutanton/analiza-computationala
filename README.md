@@ -12,27 +12,20 @@ Uneltele de analiză se pot utiliza atât pe un context existent cât și ca une
 1.	Rhino 7 sau mai nou.
 https://www.rhino3d.com/download/
 Pluginuri pentru Grasshopper (Grasshopper este inclus in Rhino):
-2.	Elefront – v4.3.0 (legacy v6) pentru Rhino 7 și Elefront - v5.2.0 pentru Rhino 8.
+2.	EleFront – v5.4.1 pentru Rhino 8.
 https://www.food4rhino.com/en/app/elefront
-3.	Ladybug tools – v1.8.0
+3.	Ladybug Tools – v1.10.0
 https://www.food4rhino.com/en/app/ladybug-tools
-4.	Radiance - v5.4a(2022-4-7)
-https://github.com/LBNL-ETA/Radiance/releases/tag/b268408a
+4.	Radiance - v5.4 (2023-11-05)
+https://github.com/LBNL-ETA/Radiance/releases/tag/rad5R4
 5.	Decoding spaces toolbox – v2021.10
 https://toolbox.decodingspaces.net/download-decodingspaces-toolbox/
-Scripturile puse la dispoziție sunt testate cu aceste versiuni de software și se recomanda utilizarea acestor versiuni și nu unele mai noi.
+Acestea sunt versiunile folosite de instalator pentru Rhino 8.
 
 # Instalare pluginuri pentru Grasshopper
-## Elefront
-Se instalează prin package manager in Rhino sau click pe install in pagina din food4rhino.
-## Ladybug tools
-Inclus in folderul /installs/ladybug-tools-1-8-0.
-Se urmaresc instructiunile din fisierul installation_instructions_txt.
-## Radiance
-Se executa installerul Radiance_b268408a_Windows.exe din folderul /installs.
-Se bifeaza la instalare „Add Radiance to the system PATH for all users”.
-Se instaleaza in „C:\Radiance\”.
-## Decoding spaces toolbox
-În Rhino se tastează în linia de comandă „GrasshopperFolders” și se selecteaza „Components”. În folderul deschis („%AppData%/Grasshopper/Libraries”) se va copia folderul „DecodingSpaces 2021.10.11”.
+
+```powershell
+.\installs\install.bat
+```
 
 Credit goes to Ionut Anton and Dana Anton for initial development and Ioana Pirvu extensive testing and debugging.
